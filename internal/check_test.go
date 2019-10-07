@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	internal "github.com/tortlewortle/mc-stat-counters/internal"
+	"github.com/tortlewortle/mcstat-exporter/internal"
 )
 
 func TestCheckPanics(t *testing.T) {

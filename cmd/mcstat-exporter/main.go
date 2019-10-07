@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	internal "github.com/tortlewortle/mc-stat-counters/internal"
+	"github.com/tortlewortle/mcstat-exporter/internal"
 )
 
 func main() {
