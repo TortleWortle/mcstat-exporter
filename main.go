@@ -19,8 +19,6 @@ import (
 var modified = false
 
 func main() {
-	fmt.Println("helllo")
-	// fileName := "/Users/tortlewortle/Library/Application Support/minecraft/saves/Test/stats/5ef828ed-48c2-4a73-95bc-b9fdd4c9e81e.json"
 	fileName := flag.String("file", "", "Absolute path to the stats file")
 	statsDir := flag.String("dir", "stats", "Directory to store counters in")
 	flag.Parse()
