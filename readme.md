@@ -1,4 +1,4 @@
-# Minecraft Stat Counters
+# Minecraft Stat Exporter
 
 A little project to automatically player stats to txt files for easy use with obs.
 
