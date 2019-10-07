@@ -1,0 +1,25 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "Hn63+11E2ZtKrUqw94A3qsG1N00=",
+			"path": "github.com/astaxie/flatmap",
+			"revision": "c0e84c00d8d55d6290cf8a6093a80d6f94240b12",
+			"revisionTime": "2016-05-05T14:55:28Z"
+		},
+		{
+			"checksumSHA1": "ro40xuiT34QHI7Y7Pm+Djbnf1gA=",
+			"path": "github.com/fsnotify/fsnotify",
+			"revision": "ab058b44498e8b7566a799372a39d150d9ea0119",
+			"revisionTime": "2019-10-05T22:41:51Z"
+		},
+		{
+			"checksumSHA1": "zkyE0EIXklwHDTkX0tRp42dp4mI=",
+			"path": "golang.org/x/sys/unix",
+			"revision": "5f54ce54270977bfbd7353a37e64c13d6bd6c9c9",
+			"revisionTime": "2019-10-06T21:41:51Z"
+		}
+	],
+	"rootPath": "github.com/tortlewortle/mcstat-exporter"
+}

@@ -1,7 +1,6 @@
 package internal
 
 import (
-	"astaxie/flatmap"
 	"encoding/json"
 	"io/ioutil"
 	"log"
@@ -10,6 +9,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/astaxie/flatmap"
 
 	"github.com/fsnotify/fsnotify"
 )
