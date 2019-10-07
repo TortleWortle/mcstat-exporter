@@ -1,10 +1,8 @@
-package main
+package internal
 
 import (
 	"astaxie/flatmap"
 	"encoding/json"
-	"flag"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -18,28 +16,8 @@ import (
 
 var modified = false
 
-func main() {
-	fileName := flag.String("file", "", "Absolute path to the stats file")
-	statsDir := flag.String("dir", "stats", "Directory to store counters in")
-	flag.Parse()
-	if !fileExists(*fileName) {
-		fmt.Println("Stats file does not exist")
-		return
-	}
-
-	done := make(chan bool)
-
-	if _, err := os.Stat(*statsDir); os.IsNotExist(err) {
-		check(os.Mkdir(*statsDir, os.ModePerm))
-	}
-	exportStats(*fileName, *statsDir)
-	go watchForChanges(*fileName)
-	go updateCounters(*fileName, *statsDir)
-
-	<-done
-}
-
-func watchForChanges(fileName string) {
+// WatchForChanges watches for stat file changes.
+func WatchForChanges(fileName string) {
 	watcher, err := fsnotify.NewWatcher()
 	if err != nil {
 		log.Fatal(err)
@@ -70,17 +48,21 @@ func watchForChanges(fileName string) {
 	}
 }
 
-func exportStats(fileName, statsDir string) {
+// ExportStats exports the stats to .txt files
+func ExportStats(fileName, statsDir string) {
 	dat, err := ioutil.ReadFile(fileName)
-	check(err)
+	Check(err)
 
 	statMap := make(map[string]interface{})
 	err = json.Unmarshal(dat, &statMap)
-	check(err)
+	Check(err)
 
 	flatMap, err := flatmap.Flatten(statMap)
-	check(err)
+	Check(err)
+	writeFiles(flatMap, statsDir)
+}
 
+func writeFiles(flatMap flatmap.FlatMap, statsDir string) {
 	for key, value := range flatMap {
 		num, err := strconv.ParseFloat(value, 0)
 		if err != nil {
@@ -93,27 +75,21 @@ func exportStats(fileName, statsDir string) {
 
 func writeFile(statsDir, name string, value int) {
 	path, err := filepath.Abs(filepath.Join(statsDir, name))
-	check(err)
+	Check(err)
 	file, err := os.OpenFile(path, os.O_RDWR|os.O_CREATE, 0777)
+	Check(err)
 	defer file.Close()
 
 	file.Write([]byte(strconv.Itoa(value)))
 }
 
-func updateCounters(fileName, statsDir string) {
+// UpdateCounters updates the counter files
+func UpdateCounters(fileName, statsDir string) {
 	for {
 		if modified {
-			exportStats(fileName, statsDir)
+			ExportStats(fileName, statsDir)
 			modified = false
 		}
 		time.Sleep(5 * time.Second)
 	}
-}
-
-func fileExists(filename string) bool {
-	info, err := os.Stat(filename)
-	if os.IsNotExist(err) {
-		return false
-	}
-	return !info.IsDir()
 }
